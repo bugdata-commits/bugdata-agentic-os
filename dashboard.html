@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Command — BUGDATA Agentic OS</title>
+<meta name="description" content="The BUGDATA Agentic OS command center: tell your business what to do, watch your agents act on it." />
+<meta name="theme-color" content="#10151c" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests" />
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='7' y='7' width='18' height='18' rx='3' fill='%237166ff'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./assets/style.css">
+<link rel="stylesheet" href="./assets/dashboard.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<div class="app-topbar">
+  <a href="./index.html" class="logo"><span class="mark" aria-hidden="true"></span>BUGDATA <b>Agentic OS</b></a>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav-menu"><span></span></button>
+</div>
+<div class="mobile-menu" id="mobile-nav-menu">
+  <div class="mobile-menu-inner">
+    <a class="mlink" href="#" aria-current="page">Command</a>
+    <a class="mlink" href="#">Agents</a>
+    <a class="mlink" href="#">CRM</a>
+    <a class="mlink" href="#">Funnels</a>
+    <a class="mlink" href="#">Campaigns</a>
+    <a class="mlink" href="#">Settings</a>
+  </div>
+</div>
+
+<div class="app-shell">
+  <aside class="app-sidebar" aria-label="Workspace navigation">
+    <div class="workspace-switch">
+      <div class="workspace-mark" aria-hidden="true">BD</div>
+      <div>
+        <div class="workspace-name">Bugdata Investments</div>
+        <div class="workspace-plan">Early access workspace</div>
+      </div>
+    </div>
+    <nav class="app-nav" aria-label="Primary">
+      <a href="#" class="active"><span class="dot" aria-hidden="true"></span>Command</a>
+      <a href="#"><span class="dot" aria-hidden="true"></span>Agents</a>
+      <a href="#"><span class="dot" aria-hidden="true"></span>CRM</a>
+      <a href="#"><span class="dot" aria-hidden="true"></span>Funnels</a>
+      <a href="#"><span class="dot" aria-hidden="true"></span>Campaigns</a>
+      <a href="#"><span class="dot" aria-hidden="true"></span>Settings</a>
+    </nav>
+    <div class="sidebar-foot">Mockup — no live backend yet.<br>See <a href="./index.html" style="color:var(--signal-2)">the pitch</a>.</div>
+  </aside>
+
+  <main class="app-main" id="main">
+    <div class="app-topline">
+      <h1>Good morning. Here's where things stand.</h1>
+      <span class="date" id="today-date"></span>
+    </div>
+
+    <div class="week-stats">
+      <div class="week-stat"><b>12</b><span>Leads this week</span></div>
+      <div class="week-stat"><b>4</b><span>Qualified</span></div>
+      <div class="week-stat"><b>2</b><span>Consultations booked</span></div>
+      <div class="week-stat"><b>1</b><span>Awaiting your approval</span></div>
+    </div>
+
+    <form class="composer" id="composer-form">
+      <label for="composer-input">Tell your business what to do</label>
+      <div class="composer-row">
+        <textarea id="composer-input" rows="1" placeholder="e.g. Follow up with everyone who booked a call but hasn't paid a deposit"></textarea>
+        <button type="submit" class="btn btn-signal">Send</button>
+      </div>
+      <p class="composer-hint">Mockup — sending adds a demo entry to the log below rather than dispatching a real agent.</p>
+    </form>
+
+    <div class="feed-head">
+      <h2>Today's activity</h2>
+    </div>
+    <div class="feed" id="activity-feed">
+      <div class="feed-item approval">
+        <div class="feed-time">9:14 AM</div>
+        <div class="feed-body">
+          <div class="feed-who">Marketing Agent</div>
+          <p class="feed-text">Built the "AI automation for SMEs" campaign — landing page, email sequence, and CRM tags are ready.</p>
+          <span class="feed-status">Awaiting approval</span>
+          <div class="feed-actions"><button type="button" class="approve">Approve &amp; launch</button><button type="button">Review</button></div>
+        </div>
+      </div>
+      <div class="feed-item done">
+        <div class="feed-time">8:52 AM</div>
+        <div class="feed-body">
+          <div class="feed-who">Kyla</div>
+          <p class="feed-text">Booked a consultation with Tendai M. for Thursday 2:00 PM and logged the call notes to CRM.</p>
+          <span class="feed-status">Done</span>
+        </div>
+      </div>
+      <div class="feed-item done">
+        <div class="feed-time">8:30 AM</div>
+        <div class="feed-body">
+          <div class="feed-who">Analytics Agent</div>
+          <p class="feed-text">Your last campaign's reply rate dropped 9% after the Tuesday send — recommend re-sending to non-openers on Friday morning instead.</p>
+          <span class="feed-status">Done</span>
+        </div>
+      </div>
+      <div class="feed-item working">
+        <div class="feed-time">8:02 AM</div>
+        <div class="feed-body">
+          <div class="feed-who">Funnel Agent</div>
+          <p class="feed-text">Rebuilding the pricing section of the funnel page to lead with the annual plan, per last week's instruction.</p>
+          <span class="feed-status">In progress</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <aside class="app-right" aria-label="Agents and pipeline">
+    <div class="right-panel">
+      <h2>Agents</h2>
+      <div class="agent-status working"><span class="led" aria-hidden="true"></span><div><span class="name">Kyla</span><span class="state">Answering 2 new leads</span></div></div>
+      <div class="agent-status approval"><span class="led" aria-hidden="true"></span><div><span class="name">Marketing Agent</span><span class="state">Awaiting your approval</span></div></div>
+      <div class="agent-status working"><span class="led" aria-hidden="true"></span><div><span class="name">Funnel Agent</span><span class="state">Editing pricing section</span></div></div>
+      <div class="agent-status idle"><span class="led" aria-hidden="true"></span><div><span class="name">Hermes</span><span class="state">Idle — no tasks queued</span></div></div>
+      <div class="agent-status idle"><span class="led" aria-hidden="true"></span><div><span class="name">Analytics Agent</span><span class="state">Next report Friday</span></div></div>
+    </div>
+
+    <div class="right-panel">
+      <h2>Pipeline</h2>
+      <div class="pipeline-track">
+        <div class="pipeline-stage"><span class="label">New</span><b>12</b></div>
+        <div class="pipeline-stage"><span class="label">Qualified</span><b>4</b></div>
+        <div class="pipeline-stage"><span class="label">Consultation booked</span><b>2</b></div>
+        <div class="pipeline-stage"><span class="label">Won</span><b>1</b></div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<script src="./assets/dashboard-app.js" defer></script>
+</body>
+</html>

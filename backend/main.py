@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 import httpx, os, json
 
 app = FastAPI(title="BUGDATA Agentic OS")
@@ -13,6 +14,7 @@ app.add_middleware(
 )
 
 CRM = os.getenv("CRM_URL", "http://localhost:8765")
+app.mount("/assets", StaticFiles(directory="../assets"), name="assets")
 
 @app.get("/api/health")
 async def health():
@@ -61,3 +63,8 @@ async def agent_command(request: Request):
     if "campaign" in command or "market" in command:
         return JSONResponse(content={"agent": "Marketing", "action": "launch_campaign", "message": "Campaign framework prepared."})
     return JSONResponse(content={"agent": "Hermes", "action": "unknown", "message": "Command received. Need more specificity."})
+
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    with open("../assets/index.html") as f:
+        return f.read()

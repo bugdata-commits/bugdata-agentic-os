@@ -1,0 +1,98 @@
+/* BUGDATA Agentic OS — dashboard ("the command center")
+   Reuses the tokens and type system from style.css. This file only adds
+   the app-shell layout: sidebar, composer, activity ledger, agent roster,
+   and pipeline tracker. */
+
+.app-shell{display:grid;grid-template-columns:240px 1fr 300px;min-height:100vh}
+
+/* ---------- Sidebar ---------- */
+.app-sidebar{border-right:1px solid var(--line);padding:24px 20px;display:flex;flex-direction:column}
+.workspace-switch{display:flex;align-items:center;gap:10px;padding:10px 8px;border-radius:8px;border:1px solid var(--line-strong);margin-bottom:28px}
+.workspace-mark{width:28px;height:28px;border-radius:6px;background:var(--signal);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font:700 12px 'IBM Plex Mono',monospace}
+.workspace-name{font:600 13px 'IBM Plex Sans',sans-serif;line-height:1.2}
+.workspace-plan{color:var(--dim);font-size:11px}
+.app-nav{display:flex;flex-direction:column;gap:2px}
+.app-nav a{display:flex;align-items:center;gap:12px;padding:10px 10px;border-radius:7px;color:var(--muted);text-decoration:none;font:500 14px 'IBM Plex Sans',sans-serif;min-height:44px}
+.app-nav a .dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.5;flex-shrink:0}
+.app-nav a:hover{background:var(--ink-2);color:var(--text)}
+.app-nav a.active{background:rgba(113,102,255,.12);color:var(--signal-2)}
+.app-nav a.active .dot{opacity:1}
+.sidebar-foot{margin-top:auto;padding-top:20px;border-top:1px solid var(--line);color:var(--dim);font-size:12px}
+
+/* ---------- Main column ---------- */
+.app-main{padding:28px 32px 60px;border-right:1px solid var(--line);min-width:0}
+.app-topline{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.app-topline h1{font-size:22px;font-weight:600}
+.app-topline .date{color:var(--dim);font:500 13px 'IBM Plex Mono',monospace}
+
+.week-stats{display:flex;gap:28px;flex-wrap:wrap;padding:18px 0 26px;border-bottom:1px solid var(--line);margin-bottom:26px}
+.week-stat b{display:block;font:600 22px 'Fraunces',serif;color:var(--text)}
+.week-stat span{color:var(--dim);font-size:12px}
+
+/* Composer */
+.composer{border:1px solid var(--line-strong);border-radius:var(--radius);padding:16px 16px 14px;margin-bottom:32px;background:var(--ink-2)}
+.composer label{display:block;color:var(--dim);font:500 12px 'IBM Plex Mono',monospace;margin-bottom:10px}
+.composer-row{display:flex;gap:10px;align-items:flex-end}
+.composer textarea{flex:1;background:transparent;border:0;resize:none;color:var(--text);font:500 15px 'IBM Plex Sans',sans-serif;min-height:26px;max-height:120px;outline:0;padding:6px 0}
+.composer textarea::placeholder{color:var(--dim)}
+.composer .btn{flex-shrink:0}
+.composer-hint{color:var(--dim);font-size:11px;margin-top:10px}
+
+/* Activity ledger */
+.feed-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.feed-head h2{font-size:15px;font-weight:600;color:var(--muted);text-transform:none}
+.feed{border-top:1px solid var(--line)}
+.feed-item{display:grid;grid-template-columns:88px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.feed-time{color:var(--dim);font:500 12px 'IBM Plex Mono',monospace;padding-top:2px}
+.feed-body{position:relative;padding-left:16px}
+.feed-body:before{content:"";position:absolute;left:0;top:5px;bottom:5px;width:2px;border-radius:2px}
+.feed-item.done .feed-body:before{background:#6fcf97}
+.feed-item.working .feed-body:before{background:var(--signal)}
+.feed-item.approval .feed-body:before{background:var(--amber)}
+.feed-who{font:700 13px 'IBM Plex Mono',monospace;color:var(--signal-2);margin-bottom:4px}
+.feed-item.done .feed-who{color:#8fe3ae}
+.feed-item.approval .feed-who{color:var(--amber)}
+.feed-text{color:var(--text);font-size:14px;line-height:1.55}
+.feed-status{display:inline-block;margin-top:8px;font:600 11px 'IBM Plex Mono',monospace;padding:3px 9px;border-radius:99px}
+.feed-item.done .feed-status{background:rgba(111,207,151,.14);color:#8fe3ae}
+.feed-item.working .feed-status{background:rgba(113,102,255,.14);color:var(--signal-2)}
+.feed-item.approval .feed-status{background:rgba(224,163,57,.14);color:var(--amber)}
+.feed-item.approval .feed-actions{margin-top:10px;display:flex;gap:8px}
+.feed-item.approval .feed-actions button{min-height:34px;padding:0 14px;border-radius:6px;font:600 12px 'IBM Plex Sans',sans-serif;cursor:pointer;border:1px solid var(--line-strong);background:transparent;color:var(--text)}
+.feed-item.approval .feed-actions button.approve{background:var(--signal);border-color:var(--signal);color:#fff}
+
+/* ---------- Right column ---------- */
+.app-right{padding:28px 24px 60px}
+.right-panel{margin-bottom:32px}
+.right-panel h2{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:14px}
+
+.agent-status{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.agent-status:last-child{border-bottom:0}
+.agent-status .led{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.agent-status.idle .led{background:var(--dim)}
+.agent-status.working .led{background:var(--signal);box-shadow:0 0 0 3px rgba(113,102,255,.18)}
+.agent-status.approval .led{background:var(--amber);box-shadow:0 0 0 3px rgba(224,163,57,.18)}
+.agent-status .name{font:600 13px 'IBM Plex Mono',monospace;color:var(--text)}
+.agent-status .state{display:block;color:var(--dim);font-size:11px;margin-top:1px}
+
+.pipeline-track{display:flex;flex-direction:column;gap:10px}
+.pipeline-stage{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:7px}
+.pipeline-stage .label{font-size:13px;color:var(--muted)}
+.pipeline-stage b{font:600 15px 'Fraunces',serif;color:var(--text)}
+
+/* ---------- Mobile ---------- */
+.app-topbar{display:none}
+@media(max-width:1100px){
+  .app-shell{grid-template-columns:1fr}
+  .app-sidebar{display:none}
+  .app-right{border-top:1px solid var(--line);padding-top:32px}
+  .app-main{border-right:0;padding:20px 20px 40px}
+  .app-topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(16,21,28,.9);backdrop-filter:blur(10px);z-index:30}
+  .feed-item{grid-template-columns:1fr}
+  .feed-time{padding-top:0}
+}
+@media(max-width:560px){
+  .week-stats{gap:20px}
+  .composer-row{flex-direction:column;align-items:stretch}
+  .composer .btn{width:100%}
+}

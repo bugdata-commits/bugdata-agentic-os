@@ -209,16 +209,7 @@ footer{padding:48px 0;border-top:1px solid var(--line)}
   .shift-cell.old{border-bottom:1px dashed var(--line)}
   .ledger-row{grid-template-columns:1fr;gap:8px}
 }
-@media (max-width: 640px) {
-  html, body {
-    background: #080908 !important;
-  }
-  body::before,
-  body::after {
-    display: none !important;
-  }
-}
-}
+@media(max-width:640px){
   .wrap{padding:0 20px}
   .hero{padding:52px 0 64px}
   .section{padding:64px 0}

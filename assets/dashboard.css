@@ -96,15 +96,3 @@
   .composer-row{flex-direction:column;align-items:stretch}
   .composer .btn{width:100%}
 }
-
-@media (max-width: 640px) {
-  html, body {
-    background: #080908 !important;
-  }
-  body::before,
-  body::after {
-    display: none !important;
-  }
-}
-
-/* preserve existing media query block */

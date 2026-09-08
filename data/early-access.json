@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Test User",
+    "business": "TestBiz",
+    "email": "test@example.com",
+    "source": "agentic-os-early-access",
+    "status": "new"
+  },
+  {
+    "name": "Remote Test",
+    "business": "TestCo",
+    "email": "remote@example.com",
+    "source": "agentic-os-early-access",
+    "status": "new"
+  }
+]

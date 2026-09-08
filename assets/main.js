@@ -1,7 +1,10 @@
 /* BUGDATA Agentic OS — site interactions */
-const API_BASE = 'https://winning-repository-lucky-specialist.trycloudflare.com';
-
 (function () {
+  // Quick Cloudflare tunnel (trycloudflare.com) — this URL rotates whenever
+  // the tunnel process restarts. When the form starts failing silently,
+  // check this first before anything else.
+  const EARLY_ACCESS_API = 'https://winning-repository-lucky-specialist.trycloudflare.com/api/early-access';
+
   // ---- Mobile menu ----
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
@@ -85,31 +88,40 @@ const API_BASE = 'https://winning-repository-lucky-specialist.trycloudflare.com'
       if (e.target === modal) closeModal();
     });
 
+    // Posts to the local backend via a Cloudflare tunnel (see EARLY_ACCESS_API
+    // above). Shows a real error state on failure instead of always claiming
+    // success — a quick tunnel can go down without warning.
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = document.getElementById('af-name').value.trim();
       const business = document.getElementById('af-business').value.trim();
       const email = document.getElementById('af-email').value.trim();
       const feedback = document.getElementById('access-feedback');
-      if (!name || !email) {
-        if (feedback) feedback.textContent = 'Please enter your name and email.';
-        return;
-      }
+      const submitBtn = form.querySelector('button[type=submit]');
+      if (!name || !email) return;
+
+      feedback.textContent = '';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
       try {
-        const r = await fetch(`${API_BASE}/api/early-access`, {
+        const res = await fetch(EARLY_ACCESS_API, {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({name, business, email}),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, business, email }),
         });
-        const data = await r.json();
-        if (!r.ok || !data.ok) throw new Error(data.error || 'Submission failed');
+        if (!res.ok) throw new Error('Request failed: ' + res.status);
+
         formView.style.display = 'none';
         successView.style.display = 'block';
         const doneBtn = document.getElementById('modal-done');
         if (doneBtn) doneBtn.focus();
-        if (feedback) feedback.textContent = '';
       } catch (err) {
-        if (feedback) feedback.textContent = err.message || 'Something went wrong. Try again.';
+        feedback.textContent = "Couldn't reach the server — please try again in a moment, or email us directly.";
+        console.error('Early access submission failed:', err);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Request access';
       }
     });
   }

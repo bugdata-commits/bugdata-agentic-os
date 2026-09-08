@@ -1,4 +1,6 @@
 /* BUGDATA Agentic OS — site interactions */
+const API_BASE = 'https://winning-repository-lucky-specialist.trycloudflare.com';
+
 (function () {
   // ---- Mobile menu ----
   const hamburger = document.getElementById('hamburger');
@@ -94,7 +96,7 @@
         return;
       }
       try {
-        const r = await fetch('/api/early-access', {
+        const r = await fetch(`${API_BASE}/api/early-access`, {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({name, business, email}),

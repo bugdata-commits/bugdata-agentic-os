@@ -1,3 +1,4 @@
+const API_BASE = 'https://winning-repository-lucky-specialist.trycloudflare.com';
 /* BUGDATA Agentic OS — dashboard mockup interactions */
 (function () {
   const hamburger = document.getElementById('hamburger');
@@ -58,15 +59,42 @@
 
       form.reset();
       textarea.style.height = 'auto';
+
+      try {
+        const r = await fetch(`${API_BASE}/api/agents/command`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({command: value}),
+        });
+        const data = await r.json();
+        if (!r.ok) throw new Error(data.error || 'Command failed');
+        const agent = data.agent || 'Hermes';
+        const message = data.message || 'Command processed.';
+        text.textContent = `${agent}: ${message}`;
+        status.textContent = data.action || 'Done';
+      } catch (err) {
+        text.textContent = `Couldn't reach the server — ${err.message}.`;
+        status.textContent = 'Error';
+      }
     });
   }
 
-  // Approve buttons in the demo feed just flip that item's own state —
-  // this is a mockup, not a live approval pipeline.
-  feed?.addEventListener('click', (e) => {
+  feed?.addEventListener('click', async (e) => {
     const btn = e.target.closest('button.approve');
     if (!btn) return;
     const item = btn.closest('.feed-item');
+    const commandText = item.querySelector('.feed-text')?.textContent || '';
+    try {
+      const r = await fetch(`${API_BASE}/api/agents/command`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({command: `approve: ${commandText}`}),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || 'Approval failed');
+    } catch (err) {
+      // fall back to local state change on failure
+    }
     item.classList.remove('approval');
     item.classList.add('done');
     item.querySelector('.feed-status').textContent = 'Launched';

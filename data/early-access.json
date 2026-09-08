@@ -12,5 +12,12 @@
     "email": "remote@example.com",
     "source": "agentic-os-early-access",
     "status": "new"
+  },
+  {
+    "name": "Winky d",
+    "business": "Winky",
+    "email": "bugdata.zw@gmail.com",
+    "source": "agentic-os-early-access",
+    "status": "new"
   }
 ]

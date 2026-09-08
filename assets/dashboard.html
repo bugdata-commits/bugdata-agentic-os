@@ -26,12 +26,12 @@
 </div>
 <div class="mobile-menu" id="mobile-nav-menu">
   <div class="mobile-menu-inner">
-    <a class="mlink" href="#" aria-current="page">Command</a>
-    <a class="mlink" href="#">Agents</a>
-    <a class="mlink" href="#">CRM</a>
-    <a class="mlink" href="#">Funnels</a>
-    <a class="mlink" href="#">Campaigns</a>
-    <a class="mlink" href="#">Settings</a>
+    <a class="mlink" href="#section-command" class="active">Command</a>
+    <a class="mlink" href="#section-agents">Agents</a>
+    <a class="mlink" href="#section-crm">CRM</a>
+    <a class="mlink" href="#section-funnels">Funnels</a>
+    <a class="mlink" href="#section-campaigns">Campaigns</a>
+    <a class="mlink" href="#section-settings">Settings</a>
   </div>
 </div>
 
@@ -46,20 +46,21 @@
     </div>
     <nav class="app-nav" aria-label="Primary">
       <a href="#" class="active"><span class="dot" aria-hidden="true"></span>Command</a>
-      <a href="#"><span class="dot" aria-hidden="true"></span>Agents</a>
-      <a href="#"><span class="dot" aria-hidden="true"></span>CRM</a>
-      <a href="#"><span class="dot" aria-hidden="true"></span>Funnels</a>
-      <a href="#"><span class="dot" aria-hidden="true"></span>Campaigns</a>
-      <a href="#"><span class="dot" aria-hidden="true"></span>Settings</a>
+      <a href="#section-agents"><span class="dot" aria-hidden="true"></span>Agents</a>
+      <a href="#section-crm"><span class="dot" aria-hidden="true"></span>CRM</a>
+      <a href="#section-funnels"><span class="dot" aria-hidden="true"></span>Funnels</a>
+      <a href="#section-campaigns"><span class="dot" aria-hidden="true"></span>Campaigns</a>
+      <a href="#section-settings"><span class="dot" aria-hidden="true"></span>Settings</a>
     </nav>
     <div class="sidebar-foot">Connected to Agentic OS backend.</div>
   </aside>
 
-  <main class="app-main" id="main">
-    <div class="app-topline">
-      <h1>Good morning. Here's where things stand.</h1>
-      <span class="date" id="today-date"></span>
-    </div>
+  <section class="app-section" id="section-command">
+    <main class="app-main" id="main">
+      <div class="app-topline">
+        <h1>Good morning. Here's where things stand.</h1>
+        <span class="date" id="today-date"></span>
+      </div>
 
     <div class="week-stats">
       <div class="week-stat"><b>12</b><span>Leads this week</span></div>
@@ -137,8 +138,64 @@
       </div>
     </div>
   </aside>
+  </section>
 </div>
 
 <script src="./assets/dashboard-app.js?v=2?v=2" defer></script>
+
+<section class="app-section" id="section-agents" style="display:none">
+  <main class="app-main" id="main">
+    <div class="app-topline">
+      <h1>Agents</h1>
+      <span class="date" id="today-date"></span>
+    </div>
+    <div class="week-stats">
+      <div class="week-stat"><b>4</b><span>Active</span></div>
+      <div class="week-stat"><b>1</b><span>Approval pending</span></div>
+    </div>
+    <p>Agent roster and task queue will appear here.</p>
+  </main>
+</section>
+
+<section class="app-section" id="section-crm" style="display:none">
+  <main class="app-main" id="main">
+    <div class="app-topline">
+      <h1>CRM</h1>
+      <span class="date" id="today-date"></span>
+    </div>
+    <p>Contacts, pipeline, and WhatsApp identity routing will appear here.</p>
+  </main>
+</section>
+
+<section class="app-section" id="section-funnels" style="display:none">
+  <main class="app-main" id="main">
+    <div class="app-topline">
+      <h1>Funnels</h1>
+      <span class="date" id="today-date"></span>
+    </div>
+    <p>Funnel status, PayNow links, and event leads will appear here.</p>
+  </main>
+</section>
+
+<section class="app-section" id="section-campaigns" style="display:none">
+  <main class="app-main" id="main">
+    <div class="app-topline">
+      <h1>Campaigns</h1>
+      <span class="date" id="today-date"></span>
+    </div>
+    <p>Campaign performance, scheduling, and LinkedIn/Zernio posts will appear here.</p>
+  </main>
+</section>
+
+<section class="app-section" id="section-settings" style="display:none">
+  <main class="app-main" id="main">
+    <div class="app-topline">
+      <h1>Settings</h1>
+      <span class="date" id="today-date"></span>
+    </div>
+    <p>API keys, tunnels, webhooks, and integration settings will appear here.</p>
+  </main>
+</section>
+
 </body>
 </html>

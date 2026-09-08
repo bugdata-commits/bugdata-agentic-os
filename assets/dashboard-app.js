@@ -101,4 +101,27 @@ const API_BASE = 'https://winning-repository-lucky-specialist.trycloudflare.com'
     const actions = item.querySelector('.feed-actions');
     if (actions) actions.remove();
   });
+
+  // Nav section router
+  document.querySelectorAll('.mlink, aside a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const href = link.getAttribute('href') || '';
+      const targetId = href.replace('#', '') || 'section-command';
+      document.querySelectorAll('.app-section, aside').forEach(el => {
+        if (el.id === targetId || (!targetId && el.id === 'section-command')) {
+          el.style.display = '';
+        } else if (el.classList.contains('app-section')) {
+          el.style.display = 'none';
+        }
+      });
+      document.querySelectorAll('aside a').forEach(a => a.classList.remove('active'));
+      document.querySelectorAll('.mlink').forEach(a => a.classList.remove('active'));
+      link.classList.add('active');
+      if (window.innerWidth <= 720) {
+        const menu = document.getElementById('mobile-nav-menu');
+        if (menu) menu.classList.remove('open');
+      }
+    });
+  });
 })();

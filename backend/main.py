@@ -72,12 +72,21 @@ async def agent_command(request: Request):
     command = body.get("command", "").lower().strip()
     if not command:
         return JSONResponse(content={"error": "No command provided"}, status_code=400)
-    if "lead" in command or "crm" in command:
-        return JSONResponse(content={"agent": "KYLA", "action": "route", "message": "Routing lead to CRM pipeline."})
-    if "listing" in command or "market" in command:
-        return JSONResponse(content={"agent": "Funnel", "action": "create_listing", "message": "Ready to create marketplace listing."})
-    if "campaign" in command or "market" in command:
+
+    c = command
+    if any(word in c for word in ["lead", "crm", "contact", "pipeline", "follow up", "follow-up", "followup", "beta", "approval", "approve", "requests"]):
+        return JSONResponse(content={"agent": "KYLA", "action": "route", "message": "Routing request to CRM and lead pipeline."})
+    if any(word in c for word in ["listing", "market", "product", "sell"]):
+        return JSONResponse(content={"agent": "Funnel", "action": "create_listing", "message": "Ready to create or update marketplace listing."})
+    if any(word in c for word in ["campaign", "advert", "marketing", "promot", "social", "linkedin"]):
         return JSONResponse(content={"agent": "Marketing", "action": "launch_campaign", "message": "Campaign framework prepared."})
+    if any(word in c for word in ["invoice", "proposal", "quote", "billing", "payment"]):
+        return JSONResponse(content={"agent": "Operations", "action": "generate_document", "message": "Invoice/proposal workflow queued."})
+    if any(word in c for word in ["report", "analytics", "data", "dashboard", "stats"]):
+        return JSONResponse(content={"agent": "Analytics", "action": "build_report", "message": "Pulling latest metrics."})
+    if any(word in c for word in ["agent", "status", "task", "queue"]):
+        return JSONResponse(content={"agent": "Hermes", "action": "check_agents", "message": "Here is the current agent status."})
+
     return JSONResponse(content={"agent": "Hermes", "action": "unknown", "message": "Command received. Need more specificity."})
 
 @app.get("/api/dashboard/summary")

@@ -83,18 +83,32 @@
       if (e.target === modal) closeModal();
     });
 
-    // No backend is wired up yet — this records the interest locally so the
-    // interaction is honest about what it does. Replace with a real request
-    // (e.g. to a Supabase table or a webhook) once the intake is ready.
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = document.getElementById('af-name').value.trim();
+      const business = document.getElementById('af-business').value.trim();
       const email = document.getElementById('af-email').value.trim();
-      if (!name || !email) return;
-      formView.style.display = 'none';
-      successView.style.display = 'block';
-      const doneBtn = document.getElementById('modal-done');
-      if (doneBtn) doneBtn.focus();
+      const feedback = document.getElementById('access-feedback');
+      if (!name || !email) {
+        if (feedback) feedback.textContent = 'Please enter your name and email.';
+        return;
+      }
+      try {
+        const r = await fetch('/api/early-access', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({name, business, email}),
+        });
+        const data = await r.json();
+        if (!r.ok || !data.ok) throw new Error(data.error || 'Submission failed');
+        formView.style.display = 'none';
+        successView.style.display = 'block';
+        const doneBtn = document.getElementById('modal-done');
+        if (doneBtn) doneBtn.focus();
+        if (feedback) feedback.textContent = '';
+      } catch (err) {
+        if (feedback) feedback.textContent = err.message || 'Something went wrong. Try again.';
+      }
     });
   }
 

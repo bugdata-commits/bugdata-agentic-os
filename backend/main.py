@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import httpx, os, json
+from pathlib import Path
 
 app = FastAPI(title="BUGDATA Agentic OS")
 
@@ -15,6 +16,21 @@ app.add_middleware(
 
 CRM = os.getenv("CRM_URL", "http://localhost:8765")
 app.mount("/assets", StaticFiles(directory="../assets"), name="assets")
+
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+DATA_DIR.mkdir(exist_ok=True)
+EARLY_ACCESS_FILE = DATA_DIR / "early-access.json"
+
+def _load_json(path: Path, default):
+    if path.exists():
+        try:
+            return json.loads(path.read_text())
+        except Exception:
+            return default
+    return default
+
+def _save_json(path: Path, data):
+    path.write_text(json.dumps(data, indent=2))
 
 @app.get("/api/health")
 async def health():
@@ -69,7 +85,7 @@ async def dashboard_summary():
     try:
         async with httpx.AsyncClient() as c:
             r = await c.get(f"{CRM}/api/contacts", timeout=5)
-            contacts = r.json() if r.ok else []
+            contacts = r.json() if r.status_code == 200 else []
     except Exception:
         contacts = []
 
@@ -98,6 +114,45 @@ async def dashboard_summary():
             {"name": "Analytics Agent", "state": "Next report Friday", "status": "idle"},
         ],
     }
+
+@app.post("/api/early-access")
+async def early_access(request: Request):
+    body = await request.json()
+    name = (body.get("name") or "").strip()
+    business = (body.get("business") or "").strip()
+    email = (body.get("email") or "").strip()
+    if not name or not email:
+        return JSONResponse(content={"ok": False, "error": "Name and email are required."}, status_code=400)
+
+    entry = {
+        "name": name,
+        "business": business,
+        "email": email,
+        "source": "agentic-os-early-access",
+        "status": "new",
+    }
+    leads = _load_json(EARLY_ACCESS_FILE, [])
+    leads.append(entry)
+    _save_json(EARLY_ACCESS_FILE, leads)
+
+    # Best-effort CRM capture without requiring WhatsApp identity
+    try:
+        async with httpx.AsyncClient() as c:
+            await c.post(
+                f"{CRM}/webhook/whatsapp",
+                json={
+                    "phone": email,
+                    "message": f"Early access request from {name} ({business})",
+                    "name": name,
+                    "chat_id": f"early-access:{email}",
+                    "source": "agentic-os",
+                },
+                timeout=10,
+            )
+    except Exception:
+        pass
+
+    return JSONResponse(content={"ok": True, "message": "Access request received."})
 
 @app.get("/", response_class=HTMLResponse)
 async def root():

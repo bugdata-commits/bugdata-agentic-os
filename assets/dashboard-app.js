@@ -31,7 +31,7 @@ const API_BASE = 'https://winning-repository-lucky-specialist.trycloudflare.com'
   const form = document.getElementById('composer-form');
   const feed = document.getElementById('activity-feed');
   if (form && feed) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const value = textarea.value.trim();
       if (!value) return;
